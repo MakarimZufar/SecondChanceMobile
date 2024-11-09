@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:second_chance_mobile/menu.dart';
+import 'package:second_chance_mobile/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());

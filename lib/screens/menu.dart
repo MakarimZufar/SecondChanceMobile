@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:second_chance_mobile/widgets/left_drawer.dart';
+import 'package:second_chance_mobile/widgets/product_card.dart';
 
 class MyHomePage extends StatelessWidget {
     final String npm = '2306241751'; // NPM
@@ -23,6 +25,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       // AppBar adalah bagian atas halaman yang menampilkan judul.
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         // Judul aplikasi "second chance mobile" dengan teks putih dan tebal.
         title: const Text(
           'Second Chance Mobile',
@@ -34,6 +37,7 @@ class MyHomePage extends StatelessWidget {
         // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
+      drawer: const LeftDrawer(),
       // Body halaman dengan padding di sekelilingnya.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -131,66 +135,6 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-class ItemHomepage {
-  final String name;
-  final IconData icon;
 
-  ItemHomepage(this.name, this.icon);
-}
 
-class ItemCard extends StatelessWidget {
-  final ItemHomepage item;
 
-  const ItemCard(this.item, {super.key});
-
-  Color getColor() {
-    switch (item.name) {
-      case "Lihat Daftar Produk":
-        return Colors.blue; // Warna untuk tombol "Lihat Daftar Produk"
-      case "Tambah Produk":
-        return Colors.green; // Warna untuk tombol "Tambah Produk"
-      case "Logout":
-        return Colors.red; // Warna untuk tombol "Logout"
-      default:
-        return Colors.grey; // Default warna jika ada yang lain
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: getColor(), // Pakai warna yang ditentukan oleh fungsi getColor
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              content: Text("Kamu telah menekan tombol ${item.name}!"),
-            ));
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
