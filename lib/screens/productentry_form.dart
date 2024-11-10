@@ -120,7 +120,7 @@ class _ProductEntryFormPageState extends State<ProductEntryFormPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Mood berhasil tersimpan'),
+                            title: const Text('Product berhasil tersimpan'),
                             content: SingleChildScrollView(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
