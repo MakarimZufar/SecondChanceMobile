@@ -3,76 +3,13 @@ Second Chance Mobile adalah platform e-commerce yang menjual barang preloved den
 
 ## Daftar Isi
 - [Fitur](#fitur)
-- [Struktur Folder](#struktur-folder)
 - [Tugas 7](#tugas-7)
+- [Tugas 8](#tugas-8)
 
 ## Fitur
 Lihat Daftar Produk: Menampilkan semua produk yang tersedia dengan tampilan yang rapi.
 Tambah Produk: Memungkinkan pengguna untuk menambahkan produk baru.
 Logout: Keluar dari aplikasi dengan cepat dan mudah.
-
-## Struktur Folder
-``` plaintext
-second_chance_mobile/
-├── android/
-│   ├── app/
-│   │   ├── src/
-│   │   │   ├── debug/
-│   │   │   │   └── AndroidManifest.xml
-│   │   │   ├── main/
-│   │   │   │   ├── java/
-│   │   │   │   └── res/
-│   │   │   └── profile/
-│   └── build.gradle
-├── ios/
-│   ├── Flutter/
-│   ├── Runner/
-│   │   ├── Assets.xcassets/
-│   │   ├── Base.lproj/
-│   │   ├── AppDelegate.swift
-│   │   ├── Info.plist
-│   │   └── MainFlutterWindow.swift
-│   ├── Runner.xcodeproj/
-│   └── Runner.xcworkspace/
-├── lib/
-│   ├── main.dart
-│   └── menu.dart
-├── linux/
-│   ├── flutter/
-│   ├── CMakeLists.txt
-│   └── main.cc
-├── macos/
-│   ├── Flutter/
-│   ├── Runner/
-│   │   ├── Assets.xcassets/
-│   │   ├── Base.lproj/
-│   ├── Runner.xcodeproj/
-│   └── Runner.xcworkspace/
-├── test/
-│   └── widget_test.dart
-├── web/
-│   ├── icons/
-│   │   ├── Icon-192.png
-│   │   ├── Icon-512.png
-│   │   ├── Icon-maskable-192.png
-│   │   └── Icon-maskable-512.png
-│   ├── favicon.png
-│   ├── index.html
-│   └── manifest.json
-├── windows/
-│   ├── flutter/
-│   ├── runner/
-│   │   ├── resources/
-│   │   ├── CMakeLists.txt
-│   │   ├── flutter_window.cpp
-│   │   └── main.cpp
-├── .metadata
-├── analysis_options.yaml
-├── pubspec.lock
-├── pubspec.yaml
-└── README.md
-```
-
 ## Tugas 7
 1. Jelaskan apa yang dimaksud dengan stateless widget dan stateful widget, dan jelaskan perbedaan dari keduanya.
    stateless adalah widget yang bersifat statis dan tidak memiliki state (data yang berubah) selama aplikasi berjalan. Tampilan atau     perilaku dari widget ini tetap sama setelah pertama kali dibangun
@@ -159,3 +96,404 @@ onTap: () {
             ));
         },
 ```
+
+## Tugas 8
+
+### Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+
+const di Flutter berguna untuk mendeklarasikan objek yang bersifat konstan, artinya nilai objek tersebut sudah tetap sejak kompilasi dan tidak akan berubah selama runtime. Penggunaan const di Flutter sangat berguna untuk mengoptimalkan performa aplikasi.
+
+Keuntungan Menggunakan const:
+
+1. Optimasi Memori: Objek const disimpan hanya sekali di memori. Jika beberapa widget membutuhkan objek yang sama (seperti warna, padding, atau teks yang konstan), Flutter hanya membuat satu instance objek tersebut. Jadi, dengan const, kita menghemat memori dan meningkatkan efisiensi.
+
+2. Performa yang Lebih Cepat: Karena objek const tidak berubah, Flutter tidak perlu merebuild objek tersebut saat widget dipanggil ulang. Ini membuat rendering lebih cepat karena objek tidak perlu dibuat kembali.
+
+3. Pengurangan Overhead Garbage Collection: Dengan const, Flutter mengurangi kebutuhan pembersihan memori untuk objek yang tidak digunakan lagi, karena objek const selalu ada di memori selama aplikasi berjalan.
+
+Kapan Sebaiknya Menggunakan const:
+
+1. Pada Nilai yang Tetap: Gunakan const untuk nilai tetap yang tidak akan berubah seperti warna, padding, atau margin.
+
+2. Widget yang Tidak Perlu Diperbarui: Untuk widget yang tidak akan berubah seperti Text atau Icon dengan properti tetap.
+Pembuatan Struktur UI Statis: Pada komponen yang sifatnya statis, terutama dalam nested widget, const berguna karena mengurangi beban rendering dan mempercepat load UI.
+
+Kapan Sebaiknya Tidak Menggunakan const:
+
+1. Objek yang Berubah-ubah: Jika suatu objek atau widget membutuhkan update berdasarkan interaksi pengguna atau variabel yang dinamis, maka const tidak bisa digunakan.
+
+2. Stateful Widgets: Untuk widget yang membutuhkan setState atau mengalami perubahan nilai selama runtime, hindari const.
+
+### Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini
+
+Di Flutter, Column dan Row adalah dua widget layout dasar yang memungkinkan kita mengatur posisi elemen secara vertikal (untuk Column) dan horizontal (untuk Row). Kedua widget ini berguna untuk membangun struktur UI dan sering digunakan bersama untuk membentuk tampilan yang kompleks.
+
+Perbandingan `Column` vs `Row`
+
+| Aspek        | Column                                           | Row                                              |
+|--------------|--------------------------------------------------|--------------------------------------------------|
+| Orientasi    | Mengatur widget secara **vertikal**             | Mengatur widget secara **horizontal**            |
+| Cross Axis   | Mengatur elemen pada **horizontal** axis         | Mengatur elemen pada **vertical** axis           |
+| Main Axis    | Elemen ditumpuk dari **atas ke bawah**          | Elemen ditumpuk dari **kiri ke kanan**           |
+| Scroll       | Biasanya memerlukan `SingleChildScrollView` jika isi terlalu banyak (overflow) | Sama, memerlukan `SingleChildScrollView` untuk mengatasi overflow |
+| Alignment    | Dapat diatur dengan `CrossAxisAlignment` dan `MainAxisAlignment` | Sama, memiliki properti alignment yang serupa    |
+
+Contoh Implementasi Column
+```dart
+import 'package:flutter/material.dart';
+
+class ColumnExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Column Example'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('Item 1'),
+            Text('Item 2'),
+            Text('Item 3'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+visualisasi hasil
+``` markdown
+--------------------------|
+|       Column Example    |
+--------------------------|
+|                         |
+|    Item 1               |
+|    Item 2               |
+|    Item 3               |
+|                         |
+--------------------------|
+```
+
+contoh implementasi row
+``` dart
+import 'package:flutter/material.dart';
+
+class RowExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Row Example'),
+      ),
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.star, color: Colors.blue),
+            Text('Row Item 1'),
+            Text('Row Item 2'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+contoh visualisasi
+
+```markdown
+--------------------------------|
+|         Row Example           |
+--------------------------------|
+|                               |
+|       Row Item 1   Row Item 2 |
+|                               |
+--------------------------------|
+```
+
+### Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan
+
+Di Flutter, terdapat banyak elemen input yang bisa digunakan untuk membuat form yang interaktif dan menarik. Berikut adalah beberapa elemen input umum yang sering digunakan pada form, serta beberapa elemen input yang mungkin tidak selalu diperlukan dalam setiap tugas form.
+
+untuk tugas ini saya baru menggunakan TextFormField
+Digunakan untuk memasukkan teks seperti nama, Deskripsi, harga.
+Mendukung validasi, yang memudahkan untuk mengontrol input pengguna.
+
+elemen yang tidak saya gunakan:
+
+1. Checkbox
+Cocok digunakan untuk pilihan ya/tidak atau persetujuan, seperti "Setuju dengan syarat dan ketentuan".
+
+2. Radio Button
+Berguna untuk memilih satu opsi dari beberapa pilihan. Misalnya, untuk memilih jenis kelamin atau kategori tertentu.
+
+3. DropdownButtonFormField
+Elemen input ini sangat berguna jika pengguna perlu memilih dari daftar pilihan yang lebih panjang. Contoh penggunaannya adalah pemilihan kota atau negara.
+
+4. Switch
+Sama seperti checkbox, tetapi tampilannya lebih modern dan cocok digunakan untuk pilihan aktif/nonaktif, seperti pengaturan notifikasi.
+
+5. Slider
+Slider digunakan untuk memilih nilai dalam rentang tertentu, misalnya untuk memilih usia atau volume.
+
+### Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+
+Mengatur tema dalam aplikasi Flutter penting untuk menjaga konsistensi tampilan, sehingga setiap elemen UI memiliki warna, font, dan style yang seragam. Tema di Flutter diatur menggunakan ThemeData, yang memungkinkan kita untuk mengelola berbagai aspek tampilan aplikasi.
+
+Cara Mengatur Tema di Flutter
+Dalam Flutter, kita bisa mengatur tema dengan cara berikut:
+
+1. Mendefinisikan ThemeData di level aplikasi, sehingga tema ini berlaku untuk seluruh widget yang ada di aplikasi.
+
+2. Menggunakan Theme.of(context) untuk mengakses tema saat ini dan mengaplikasikan gaya khusus pada widget tertentu.
+
+3. Mengimplementasikan Dark Mode dan Light Mode dengan memanfaatkan brightness di ThemeData.
+
+ya saya mengiplementasi tema pada aplikasi yang saya buat.
+
+### pembuatan tugas 8
+
+1. pembuatan left drawer
+```dart
+import 'package:flutter/material.dart';
+import 'package:second_chance_mobile/screens/menu.dart';
+import 'package:second_chance_mobile/screens/productentry_form.dart';
+
+class LeftDrawer extends StatelessWidget {
+  const LeftDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          DrawerHeader(
+              decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            child: const Column(
+              children: [
+                Text(
+                  'Second Chance',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Padding(padding: EdgeInsets.all(8)),
+                Text(
+                  "Ubah barang tidak terpakai mu menjadi uang",
+                    style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+              ),
+          ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Halaman Utama'),
+            // Bagian redirection ke MyHomePage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_bag_outlined),
+            title: const Text('Tambah Barang'),
+            // Bagian redirection ke MoodEntryFormPage
+            onTap: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+          builder: (context) => ProductEntryFormPage(),
+          ));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+2. pembuatan form input data
+``` dart
+import 'package:flutter/material.dart';
+import 'package:second_chance_mobile/widgets/left_drawer.dart';
+
+class ProductEntryFormPage extends StatefulWidget {
+  const ProductEntryFormPage({super.key});
+
+  @override
+  State<ProductEntryFormPage> createState() => _ProductEntryFormPageState();
+}
+
+class _ProductEntryFormPageState extends State<ProductEntryFormPage> {
+  final _formKey = GlobalKey<FormState>();
+  String _name = "";
+  String _description = "";
+  int _price = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            'Form Tambah Barang Kamu yang Sudah Tidak Terpakai',
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+      ),
+      drawer: const LeftDrawer(),
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Name",
+                  labelText: "Name",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                onChanged: (String? value) {
+                  setState(() {
+                    _name = value!;
+                  });
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Nama tidak boleh kosong!";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Description",
+                  labelText: "Description",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                onChanged: (String? value) {
+                  setState(() {
+                    _description = value!;
+                  });
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Deskripsi tidak boleh kosong!";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Product Price",
+                  labelText: "Product Price",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                onChanged: (String? value) {
+                  setState(() {
+                    _price = int.tryParse(value!) ?? 0;
+                  });
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Harga tidak boleh kosong!";
+                  }
+                  if (int.tryParse(value) == null) {
+                    return "Harga intensity harus berupa angka!";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(
+                        Theme.of(context).colorScheme.primary),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Product berhasil tersimpan'),
+                            content: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Name: $_name'),
+                                  Text('Description: $_description'),
+                                  Text('Price: $_price'),
+                                ],
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  _formKey.currentState!.reset();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: const Text(
+                    "Save",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+          )
+        ),
+      ),
+    );
+  }
+}
+```
+
+3. melakukan refactoring files dengan menambahkan screens direktori.
