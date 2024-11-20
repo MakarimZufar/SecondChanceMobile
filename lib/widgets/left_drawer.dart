@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:second_chance_mobile/models/product_entry.dart';
 import 'package:second_chance_mobile/screens/menu.dart';
 import 'package:second_chance_mobile/screens/productentry_form.dart';
 
@@ -58,12 +59,35 @@ class LeftDrawer extends StatelessWidget {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-          builder: (context) => ProductEntryFormPage(),
+          builder: (context) => const ProductEntryFormPage(),
           ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_reaction_rounded),
+            title: const Text('Daftar Mood'),
+            onTap: () {
+              // Route menu ke halaman mood
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProductEntryFormPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_reaction_rounded),
+            title: const Text('Daftar Mood'),
+            onTap: () {
+              // Route menu ke halaman mood
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProductEntryFormPage()),
+              );
             },
           ),
         ],
       ),
+      
     );
   }
 }
